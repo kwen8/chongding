@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::any('/wechat', 'WeChatController@serve');
+
+Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
+    Route::get('/user', 'WeChatController@user');
+});
